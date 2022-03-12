@@ -59,7 +59,14 @@ public class EventQueue {
         head = head.next;
         return;
     }
-
+    
+    /**                                                                             
+    * @return the first event in the list    
+    */                                       
+    public Object getFirst(){                 
+        return head;                          
+    }                                         
+                                         
 }
 
 
