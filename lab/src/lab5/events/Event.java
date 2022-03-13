@@ -1,4 +1,5 @@
 package lab5.events;
+import State.State;
 
 public abstract class Event {
    	private State state;
