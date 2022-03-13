@@ -17,9 +17,12 @@ public class State extends Observable {
     public void stopSim(){
     	eBrake = true;
     }
-	public void callObservers(){
-		setChanged();
-		notifyObservers();
-	}
+    public void callObservers(){
+	setChanged();
+	notifyObservers();
+    }
+    public boolean getEBrake(){
+        return eBrake;
+    }
 }
 
