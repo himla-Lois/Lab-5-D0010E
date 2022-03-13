@@ -31,16 +31,16 @@ public class Simulator {
    */
   public void run() {
 
-    while (state.eBrake == false && queue.hasEvent()) {
-      try {
-        Event currentEvent = queue.getFirstEvent(); // Gets next event in linkedList, and then run it.
-        currentEvent.effect(state);                 //Executes our first event in line. 
-        //TODO;Change the current state to what next in linkedList was.
-      } catch (NullPointerException e) {
-        System.out.print("The simulation is finished");
-      }
+    while (!state.getEBrake() && !queue.isEmpty()) {
+            try {
+                Event currentEvent = queue.getFirst(); // Gets next event in linkedList, and then run it.
+                currentEvent.effect();                 //Executes our first event in line.
+                //TODO;Change the current state to what next in linkedList was.
+            } catch (NullPointerException e) {
+                System.out.print("The simulation is finished");
+            }
 
-    }
+        }
   }
 
 }
