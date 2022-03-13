@@ -60,6 +60,14 @@ public class EventQueue {
         return;
     }
     
+    /**
+     * 
+     * @return true if the queue is empty
+     */
+    public boolean isEmpty(){
+        return head == null;
+    }
+    
     /**                                                                             
     * @return the first event in the list    
     */                                       
