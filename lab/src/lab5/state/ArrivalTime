@@ -1,0 +1,23 @@
+package lab5.state;
+
+import java.util.Random;
+
+public class ArrivalTime {
+
+    private Random rand;
+    private double lambda;
+
+    public ArrivalTime(double lambda, long seed){
+        rand = new Random(seed);
+        this.lambda = lambda;
+    }
+    public ArrivalTime(double lambda){
+        rand = new Random();
+        this.lambda = lambda;
+    }
+
+    public double nextArrival() {
+        return -Math.log(rand.nextDouble())/lambda;
+    }
+
+}
