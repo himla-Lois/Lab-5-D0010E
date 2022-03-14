@@ -1,0 +1,24 @@
+package lab5.state;
+
+import java.util.Random;
+
+public class PickTime {
+    private Random rand;
+    private double lower, width;
+
+    public PickTime(double lower, double upper, long seed) {
+        rand = new Random(seed);
+        this.lower = lower;
+        this.width = upper-lower;
+    }
+
+    public PickTime(double lower, double upper) {
+        rand = new Random();
+        this.lower = lower;
+        this.width = upper-lower;
+    }
+
+    public double nextPick() {
+        return lower+rand.nextDouble()*width;
+    }
+}
