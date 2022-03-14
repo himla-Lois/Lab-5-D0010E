@@ -41,6 +41,29 @@ public class EventQueue {
        }
        current.next = new Node(Event);
     }
+    
+    /**
+     * Adds a given event to queue, after events with a lower time variable.
+     * @param Event chosen event to be added to queue
+     */
+    public void addAfterHigherTime(Event Event){
+
+        Node inputNode = new Node(Event);
+
+        if(head == null){
+            head = new Node(Event);
+            return;
+        }
+        Node current = head;
+        while(current.next  != null) {
+            if (current.next.Event.time < Event.time) {
+                current = current.next;
+            }
+            inputNode.next = current.next;
+            current.next = inputNode;
+        }
+        current.next = new Node(Event);
+    }
 
     /**
      * Creates a node first in the LinkedList, assigned with given event.
