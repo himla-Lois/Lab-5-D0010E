@@ -25,7 +25,7 @@ public class OpenEvent extends StartEvent{
      * The specific effect of this event
      */
     public void effect(){
-        Q.addFirst(new ArriveEvent(S, Q, 0 )); // TODO: the time parameter is uncertain, and should not be taken as a definite.
+        Q.addAfterHigherTime(new ArriveEvent(S, Q, 0 )); // TODO: the time parameter is uncertain, and should not be taken as a definite.
     }
 }
 
