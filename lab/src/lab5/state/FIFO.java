@@ -77,6 +77,17 @@ public class FIFO {
         }
         Q.poll();
     }
+    
+    /**
+    * @return the queue compiled in a string
+    */
+    public String toString() {
+        String compile = "Customer queue: ";
+        for (int customer = 0; customer < Q.size(); customer++) {
+            compile += "(" + String.valueOf(get(customer)) + ") ";
+        }
+        return compile;
+    }
 
 
 }
