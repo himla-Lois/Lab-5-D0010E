@@ -1,4 +1,6 @@
-package lab5.events;
+package events;
+
+import lab5.events.Event;
 
 /**
  * Representing the storing and sorting of events using a LinkedList.
@@ -83,6 +85,7 @@ public class EventQueue {
         return;
     }
     
+<<<<<<< Updated upstream
     /**
      * 
      * @return true if the queue is empty
@@ -96,9 +99,21 @@ public class EventQueue {
     */                                       
     public Object getFirst(){                 
         return head;                          
+=======
+    /**                                                                             
+    * @return the first event in the list    
+    */                                       
+    public Event getFirst(){                 
+        return head;                          
+    }
+
+    public boolean hasEvent() {
+        return false;
+>>>>>>> Stashed changes
     }                                         
                                          
 }
+
 
 
 

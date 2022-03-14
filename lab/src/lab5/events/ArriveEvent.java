@@ -1,9 +1,16 @@
-package lab5.events;
+package events;
 
+<<<<<<< Updated upstream
 import lab5.state.FIFO;
 import lab5.state.CustomerFactory;
 import lab5.events.PickEvent;
 import lab5.state.State;
+=======
+import events.PickEvent;
+import state.FIFO;
+import state.CustomerFactory;
+import state.State;
+>>>>>>> Stashed changes
 
 /**
  * Represents the event; arrival, of a customer.

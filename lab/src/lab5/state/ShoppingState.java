@@ -201,7 +201,11 @@ public class ShoppingState extends State{
     }
 
 
+<<<<<<< Updated upstream
     int getUnoccupiedRegisters() { //IM HERE
+=======
+    int getUnoccupiedRegisters() {
+>>>>>>> Stashed changes
         return unoccupiedRegisters;
     }
 
@@ -242,7 +246,11 @@ public class ShoppingState extends State{
     }
 
     
+<<<<<<< Updated upstream
     void updateQAndRLogTime(double time) {
+=======
+    public void updateQAndRLogTime(double time) {
+>>>>>>> Stashed changes
         //Adds time to the two variables using the current time
         this.addToUnusedCashloggedTime((time - this.getCurrentTime()) * this.getUnoccupiedRegisters());
         
@@ -261,5 +269,10 @@ public class ShoppingState extends State{
         }
         this.lastPayTime = lastPayTime;
     }
+<<<<<<< Updated upstream
+=======
+    public static void updateQAndLogTime(Object time) {
+    }
+>>>>>>> Stashed changes
 
 }

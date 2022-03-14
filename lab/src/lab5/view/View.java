@@ -1,4 +1,4 @@
-package lab5.view;
+package view;
 
 import java.util.Observable;
 import java.util.Observer;
