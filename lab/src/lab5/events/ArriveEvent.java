@@ -1,41 +1,68 @@
-package lab5.events;
+package ShoppingSim;
 
-import lab5.state.FIFO;
-import lab5.state.CustomerFactory;
-import lab5.events.PickEvent;
-import lab5.state.State;
-
-/**
- * Represents the event; arrival, of a customer.
+import GeneralSim.Event;
+import GeneralSim.EventQueue;
+import GeneralSim.State;
+import ShoppingSim.CustomerThings.Customer;
+/** 
+ * Event representing a customer arriving
+ * @author Johan Sundin
+ * @author William Poromaa
+ * @author Hugo Lind
+ * @author Isak Lockman
+ * 
  */
-public class ArriveEvent extends Event{
+public class ArrivalEvent extends Event {
 
-    private FIFO f;
-    private CustomerFactory cf;
-
-    ArriveEvent(State state, EventQueue queue, double time){
-        super(state, queue, time);
-    }
-
-    /**
-     * Carries out the effect of a customer arrival at the supermarket.
+    /** 
+     *
+     * constructor
+     * @param time The time at which the event occurs
+     * @param eventQueue The eventqueue is needed as a parameter to add the event to the eventqueue
      */
-    public void effect() throws IllegalArgumentException {
-
-
-
-        if (f.isFull()) { // TODO: should also check if store id open
-            throw new IllegalArgumentException("The supermarket is full.");
-            // TODO: should add a missed customer if the store was open but full.
-        }
-        // TODO: should check if store is full, and closed. If closed, return false or
-        //  throw exception.
-        cf.createCustomer();
-
-        // TODO:
-        //  (1) a pickEvent should be created here when customer is done picking groceries.
-        //  (2) lastly, this effect should create a new future arrive event for the next customer.
-
-
+    ArrivalEvent(double time, EventQueue eventQueue) {
+        super(time, eventQueue);
     }
+
+    @Override
+    protected void doEvent(State state) {
+        ShoppingState shoppingState = (ShoppingState)state;
+
+        if(shoppingState.getCurrentTime() < shoppingState.S) {
+            shoppingState.updateQueueAndRegisterTime(super.time); // efter stängningstid ska inte tiderna uppdateras av arrival
+        }
+
+
+
+        super.doEvent(state);
+        
+        Customer customer = shoppingState.createCustomer();
+        
+        if(shoppingState.getCurrentTime() < shoppingState.S) { // kollar om före stängningstid
+
+            // skapar arrivalEvent
+            double arrivalTime = shoppingState.getCurrentTime() + shoppingState.nextArrivalRandom();
+            ArrivalEvent arrivalEvent = new ArrivalEvent(arrivalTime, super.eventQueue);
+            super.eventQueue.push(arrivalEvent);
+
+            if(shoppingState.getCustomers() < shoppingState.M) { // kollar om det inte är fullt i butiken
+                shoppingState.incCustomers();
+                // skapar shopEvent
+                double shopTime = shoppingState.getCurrentTime() + shoppingState.nextShopRandom();
+                ShopEvent shopEvent = new ShopEvent(shopTime, super.eventQueue, customer);
+                super.eventQueue.push(shopEvent);
+
+            } else { // om det är fullt i "butiken" så räknas kunden som förlorad
+                shoppingState.incLostCustomer();
+            }
+            
+        }  
+    }
+
+    @Override
+    protected String getEventName() {
+        return "ArrivalEvent";
+    }
+    
 }
+
