@@ -1,4 +1,4 @@
-package lab5.state;
+package state;
 
 import java.util.LinkedList;
 

@@ -14,8 +14,8 @@ public class ShoppingState extends State{
     FIFO customers = new FIFO();
 
     final int N; // Number of registerd open cash
-    final int M; // maximum allowed customers
-    final double S; // closing-time (starts at 0)
+    public final int M; // maximum allowed customers
+    public final double S; // closing-time (starts at 0)
     final double lambda; // ankomsthastigheten för kunder
     final double pickMin; // min picktime
     final double pickMax; // max picktime
@@ -40,6 +40,7 @@ public class ShoppingState extends State{
     private Object customerFactory;
 
     private Object FIFO;
+    private boolean isStoreOpen;
 
     
 /** 
@@ -93,7 +94,7 @@ public class ShoppingState extends State{
         this.lastPayTime = 0.0d;
         
 
-    Customer makeCustomer(){
+    public CustomerFactory makeCustomer(){
         return this.customerFactory.createCustomer();
     }
 
@@ -114,7 +115,7 @@ public class ShoppingState extends State{
         return this.FIFO.getSize();
     }
 
-    double nextArrivalRandom() {
+    public double nextArrivalRandom() {
         return this.arrivalRandom.getRandom();
     }
 
@@ -133,12 +134,12 @@ public class ShoppingState extends State{
      * Used by view to get the number of customers in the store
      * @return returns the numbers of customers in the store 
      */
-    int getNrOfCustomers() {
+    public int getNrOfCustomers() {
         return this.customer;
     }
 
 
-    void increaseCustomers() {
+    public void increaseCustomers() {
         ++this.customer;
     }
 
@@ -170,7 +171,7 @@ public class ShoppingState extends State{
     }
 
 
-    void increaseLostCustomer() {
+    public void increaseLostCustomer() {
         ++this.lostCustomers;
     }
 
@@ -201,11 +202,7 @@ public class ShoppingState extends State{
     }
 
 
-<<<<<<< Updated upstream
-    int getUnoccupiedRegisters() { //IM HERE
-=======
     int getUnoccupiedRegisters() {
->>>>>>> Stashed changes
         return unoccupiedRegisters;
     }
 
@@ -246,11 +243,7 @@ public class ShoppingState extends State{
     }
 
     
-<<<<<<< Updated upstream
-    void updateQAndRLogTime(double time) {
-=======
     public void updateQAndRLogTime(double time) {
->>>>>>> Stashed changes
         //Adds time to the two variables using the current time
         this.addToUnusedCashloggedTime((time - this.getCurrentTime()) * this.getUnoccupiedRegisters());
         
@@ -269,10 +262,24 @@ public class ShoppingState extends State{
         }
         this.lastPayTime = lastPayTime;
     }
-<<<<<<< Updated upstream
-=======
     public static void updateQAndLogTime(Object time) {
     }
->>>>>>> Stashed changes
+
+    public boolean isStoreOpen(){
+        return isStoreOpen;
+    }
+
+    public void openStore(){
+        isStoreOpen = true;
+    }
+
+    public void closeStore(){
+        isStoreOpen = false;
+    }
+    public double getCurrentTime() {
+        return F; //TODO
+    }
+
+
 
 }

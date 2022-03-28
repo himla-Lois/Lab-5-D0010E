@@ -85,21 +85,6 @@ public class EventQueue {
         return;
     }
     
-<<<<<<< Updated upstream
-    /**
-     * 
-     * @return true if the queue is empty
-     */
-    public boolean isEmpty(){
-        return head == null;
-    }
-    
-    /**                                                                             
-    * @return the first event in the list    
-    */                                       
-    public Object getFirst(){                 
-        return head;                          
-=======
     /**                                                                             
     * @return the first event in the list    
     */                                       
@@ -109,7 +94,6 @@ public class EventQueue {
 
     public boolean hasEvent() {
         return false;
->>>>>>> Stashed changes
     }                                         
                                          
 }

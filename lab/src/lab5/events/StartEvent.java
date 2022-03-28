@@ -16,9 +16,8 @@ public abstract class StartEvent extends Event{
     public StartEvent(State state, EventQueue queue, double time){
         super(state, queue, time);
     }
-<<<<<<< Updated upstream
-}
 
-=======
+    public void effect(){
+
+    }
 }
->>>>>>> Stashed changes
