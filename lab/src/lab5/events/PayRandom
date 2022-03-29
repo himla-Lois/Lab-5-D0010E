@@ -1,0 +1,19 @@
+package lab5.events;
+import lab5.random.UniformRandomStream;
+
+/**
+ * gets random numbers for creation of PayEvent
+ */
+class PayRandom {
+
+    private UniformRandomStream uniformRandomStream;
+   
+    //initializes a new UniformRandomStream using seed, kMin and Kmax
+    PayRandom(double kMin, double kMax, long seed) {
+        this.uniformRandomStream = new UniformRandomStream(kMin, kMax, seed);
+    }
+    //returns new random number
+    double getRandom() {
+        return uniformRandomStream.next();
+    }
+}
