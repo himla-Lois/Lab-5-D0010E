@@ -3,10 +3,20 @@ import java.util.Observable;
 
 public class State extends Observable {
     private int currentState = 0;
-    private boolean eBrake = false;
+    public boolean eBrake = false;
+    protected double currentTime;
 
-    // TODO: should be able to keep track of runtime.
-    //  And should call the observer every time an EVENT has been triggered.
+    public State() {
+      this.eBrake = false;
+      this.currentTime = 0.0d;
+  }
+
+
+    public double getCurrentTime() {        //Keeps track of runtime.
+      return currentTime;
+  }
+
+    
     
     public int addTime(int time) {
     	currentState += time;
@@ -17,12 +27,9 @@ public class State extends Observable {
     public void stopSim(){
     	eBrake = true;
     }
-    public void callObservers(){
-	setChanged();
-	notifyObservers();
-    }
-    public boolean getEBrake(){
-        return eBrake;
-    }
+	public void callObservers(){     //Call the observer every time an EVENT has been triggered.
+		setChanged();
+		notifyObservers();
+	}
 }
 
