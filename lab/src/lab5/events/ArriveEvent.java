@@ -1,68 +1,49 @@
-package ShoppingSim;
+package events;
 
-import GeneralSim.Event;
-import GeneralSim.EventQueue;
-import GeneralSim.State;
-import ShoppingSim.CustomerThings.Customer;
-/** 
- * Event representing a customer arriving
- * @author Johan Sundin
- * @author William Poromaa
- * @author Hugo Lind
- * @author Isak Lockman
- * 
+import lab5.events.Event;
+import state.ShoppingState;
+import state.State;
+
+/**
+ * Represents the event; arrival, of a customer.
  */
-public class ArrivalEvent extends Event {
 
-    /** 
-     *
-     * constructor
-     * @param time The time at which the event occurs
-     * @param eventQueue The eventqueue is needed as a parameter to add the event to the eventqueue
-     */
-    ArrivalEvent(double time, EventQueue eventQueue) {
-        super(time, eventQueue);
+public class ArriveEvent extends Event {
+    private double time;
+    private EventQueue eQueue;
+
+    ArriveEvent(State state, EventQueue eQueue, double time) {
+        super(state, eQueue, time);
+
     }
 
     @Override
-    protected void doEvent(State state) {
-        ShoppingState shoppingState = (ShoppingState)state;
+    public void effect(State state) {
+        ShoppingState shoppingState = (ShoppingState) state; // Turn shoppingstate to state.
 
-        if(shoppingState.getCurrentTime() < shoppingState.S) {
-            shoppingState.updateQueueAndRegisterTime(super.time); // efter stängningstid ska inte tiderna uppdateras av arrival
+        if (shoppingState.getCurrentTime() < shoppingState.S) { // see if the store is still before closingtime.
+            shoppingState.updateQAndRLogTime(time);
         }
 
+        effect(state);
 
+        shoppingState.makeCustomer();
 
-        super.doEvent(state);
-        
-        Customer customer = shoppingState.createCustomer();
-        
-        if(shoppingState.getCurrentTime() < shoppingState.S) { // kollar om före stängningstid
+        double arrivalTime = shoppingState.getCurrentTime() + shoppingState.nextArrivalRandom(); // Time where customer
+                                                                                                 // arrived
+        ArriveEvent arrivalEvent = new ArriveEvent(state, eQueue, arrivalTime); // create arriveEvent here
+        eQueue.addFirst(arrivalEvent); // Added it to EventQueue
 
-            // skapar arrivalEvent
-            double arrivalTime = shoppingState.getCurrentTime() + shoppingState.nextArrivalRandom();
-            ArrivalEvent arrivalEvent = new ArrivalEvent(arrivalTime, super.eventQueue);
-            super.eventQueue.push(arrivalEvent);
+        if (shoppingState.getNrOfCustomers() < shoppingState.M) { // looks if it's full with customers in the shop
+            shoppingState.increaseCustomers();
 
-            if(shoppingState.getCustomers() < shoppingState.M) { // kollar om det inte är fullt i butiken
-                shoppingState.incCustomers();
-                // skapar shopEvent
-                double shopTime = shoppingState.getCurrentTime() + shoppingState.nextShopRandom();
-                ShopEvent shopEvent = new ShopEvent(shopTime, super.eventQueue, customer);
-                super.eventQueue.push(shopEvent);
-
-            } else { // om det är fullt i "butiken" så räknas kunden som förlorad
-                shoppingState.incLostCustomer();
-            }
-            
-        }  
+        } else { // om det är fullt i "butiken" så räknas kunden som förlorad
+            shoppingState.increaseLostCustomer();
+        }
     }
 
-    @Override
-    protected String getEventName() {
+    protected String EventName() {
         return "ArrivalEvent";
     }
-    
 }
 
